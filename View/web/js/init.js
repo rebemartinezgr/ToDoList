@@ -19,7 +19,7 @@ function editItem(data)
         }
     }
     // Send a request
-    xhttp.open("POST", "../../Controller/Put.php");
+    xhttp.open("POST", "/Controller/Put.php");
     xhttp.send(data);
 }
 
@@ -43,7 +43,7 @@ function addItem(data)
         }
     }
     // Send a request
-    xhttp.open("POST", "../../Controller/Post.php");
+    xhttp.open("POST", "/Controller/Post.php");
     xhttp.send(data);
 }
 
@@ -67,7 +67,7 @@ function deleteItem(data)
         }
     }
     // Send a request
-    xhttp.open("POST", "../../Controller/Delete.php");
+    xhttp.open("POST", "/Controller/Delete.php");
     xhttp.send(data);
 }
 
@@ -122,15 +122,6 @@ function handleStatusClick(checkbox)
     data.append('status', status);
     data.append('value',  itemValue.innerText);
     editItem(data);
-}
-
-function handleNewItem()
-{
-    var data = new FormData();
-    let input = getNewItemInput()
-    data.append('value', input.value);
-    addItem(data);
-    input.value = '';
 }
 
 function handleRemoveItem(removeButton)
