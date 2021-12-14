@@ -31,24 +31,36 @@
         </div>
 
     </div>
+    <form action="../Controller/Post.php" method="post">
     <div class="row">
         <div class="col-sm-2">
         </div>
-        <div class="col-sm-7">
-            <div class="form-group">
-                <input class="form-control input-lg" id="new-item" type="text"/>
+        <!-- Form -->
+            <div class="col-sm-7">
+                <div class="form-group">
+                    <input class="form-control input-lg" id="new-item" name="value" type="text"/>
+                </div>
+                <div class="form-group">
+                    <label for="date">Fecha vencimiento</label>
+                    <input class="form-control input-lg" id="date" name="date" type="date"/>
+                </div>
+                <div class="form-group">
+                    <label for="category">Categoría</label>
+                    <input class="form-control input-lg" id="category" name="category" type="text"/>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-1">
-            <div class="form-group">
-                <button type="button" class="form-control add-button btn btn-primary" onclick='handleNewItem()'><i
-                            class="fa fa-plus"></i>
-                </button>
+            <div class="col-sm-1">
+                <div class="form-group">
+                    <button type="submit" class="form-control add-button btn btn-primary"><i
+                                class="fa fa-plus"></i>
+                    </button>
+                </div>
             </div>
-        </div>
+       <!-- End Form -->
         <div class="col-sm-2">
         </div>
     </div>
+    </form>
     <div class="row">
         <div class="col-sm-2">
         </div>

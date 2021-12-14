@@ -24,8 +24,10 @@ class Post extends AbstractController
     {
         $result = [];
         $block = new ItemRenderer();
-        $status = $_REQUEST['status'] ?? null;
+        $status = $_REQUEST['status'] ?? 0;
         $value = $_REQUEST['value'] ?? null;
+        $category = $_REQUEST['category'] ?? null;
+        $date = $_REQUEST['date'] ?? null;
         $list = new ItemList();
         $item = $this->add($value, $status, $list);
         $result[$item->getId()] = $block->renderItem($item);
@@ -54,4 +56,5 @@ class Post extends AbstractController
 
 //Create the object
 $controller = new Post();
-echo $controller->getResponse();
+$controller->getResponse();
+header('Location: /view');
