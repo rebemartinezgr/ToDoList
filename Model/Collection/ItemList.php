@@ -4,6 +4,7 @@
  */
 
 include_once "../Model/Item.php";
+include_once "../Model/DB/Connection.php";
 
 /**
  * Item List Collection Class
@@ -14,6 +15,10 @@ class ItemList
      * @var array
      */
     private $items = [];
+    /**
+     * @var Connection
+     */
+    private $connection;
 
     /**
      * @param array $items
@@ -22,6 +27,7 @@ class ItemList
         array $items = []
     ) {
         $this->items = $items;
+        $this->connection = new Connection();
     }
 
     /**
@@ -31,6 +37,7 @@ class ItemList
      */
     public function getItems(): array
     {
+        $this->connection->connect();
         if ($this->items === null) {
             //TODO load from database
         }
