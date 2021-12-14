@@ -3,7 +3,7 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
-include_once "../Collection/ItemList.php";
+include_once "../Model/Collection/ItemList.php";
 include_once "AbstractController.php";
 
 /**

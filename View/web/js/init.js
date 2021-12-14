@@ -11,7 +11,7 @@ function getFullList() {
         processItems(response);
     }
     // Send a request
-    xhttp.open("GET", "Controller/Get.php");
+    xhttp.open("GET", "../../Controller/Get.php");
     xhttp.send();
 }
 
@@ -35,7 +35,7 @@ function editItem(data)
         }
     }
     // Send a request
-    xhttp.open("POST", "Controller/Put.php");
+    xhttp.open("POST", "../../Controller/Put.php");
     xhttp.send(data);
 }
 
@@ -59,7 +59,7 @@ function addItem(data)
         }
     }
     // Send a request
-    xhttp.open("POST", "Controller/Post.php");
+    xhttp.open("POST", "../../Controller/Post.php");
     xhttp.send(data);
 }
 
@@ -83,7 +83,7 @@ function deleteItem(data)
         }
     }
     // Send a request
-    xhttp.open("POST", "Controller/Delete.php");
+    xhttp.open("POST", "../../Controller/Delete.php");
     xhttp.send(data);
 }
 

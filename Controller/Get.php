@@ -5,9 +5,9 @@
  * Controller for get request
  */
 
-include_once "../Collection/ItemList.php";
+include_once "../Model/Collection/ItemList.php";
 include_once "../Model/Item.php";
-include_once "../Block/ItemRenderer.php";
+include_once "../View/Block/ItemRenderer.php";
 include_once "AbstractController.php";
 
 /**
