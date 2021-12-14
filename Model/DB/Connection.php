@@ -6,7 +6,7 @@ class Connection {
 
     const HOST = '127.0.0.1';
     const USERNAME = 'user';
-    const PASSWORD = 'root_password';
+    const PASSWORD = 'password';
     const DATABASE = 'database';
 
 

@@ -1,7 +1,7 @@
 <!--
   ~ @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
   -->
-
+<?php include_once "../Controller/Get.php"; ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,7 +42,7 @@
         <div class="col-sm-1">
             <div class="form-group">
                 <button type="button" class="form-control add-button btn btn-primary" onclick='handleNewItem()'><i
-                        class="fa fa-plus"></i>
+                            class="fa fa-plus"></i>
                 </button>
             </div>
         </div>
@@ -53,7 +53,13 @@
         <div class="col-sm-2">
         </div>
         <div class="col-sm-7">
-            <ul id="list" class="mylist list-group"></ul>
+            <ul id="list" class="mylist list-group">
+                <?php $controller = new Get();
+                foreach ($controller->execute() as $k => $item):
+                    echo "<li class='list-group-item' id='{$k}'> {$item}</li>";
+                endforeach;
+                ?>
+            </ul>
         </div>
         <div class="col-sm-1">
         </div>

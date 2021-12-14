@@ -1,19 +1,3 @@
-window.onload = getFullList;
-
-
-function getFullList() {
-    // Create an XMLHttpRequest object
-    const xhttp = new XMLHttpRequest();
-    // Define a callback function to show the list
-    xhttp.onload = function() {
-        // Use the ajax response data
-        let response = JSON.parse(xhttp.response);
-        processItems(response);
-    }
-    // Send a request
-    xhttp.open("GET", "../../Controller/Get.php");
-    xhttp.send();
-}
 
 function editItem(data)
 {

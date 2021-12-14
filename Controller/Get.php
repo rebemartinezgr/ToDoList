@@ -47,7 +47,3 @@ class Get extends AbstractController
         ];
     }
 }
-
-//Create the object
-$controller = new Get();
-echo $controller->getResponse();
