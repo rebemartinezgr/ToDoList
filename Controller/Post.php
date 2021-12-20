@@ -3,8 +3,8 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
-include_once "../Model/Collection/ItemList.php";
-include_once "../View/Block/ItemRenderer.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Collection/ItemList.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/View/Block/ItemRenderer.php";
 include_once "AbstractController.php";
 
 /**
@@ -31,6 +31,8 @@ class Post extends AbstractController
         $list = new ItemList();
         $item = $this->add($value, $status, $list);
         $result[$item->getId()] = $block->renderItem($item);
+        print_r($result);
+        var_dump($result);
 
         return $result;
     }
@@ -57,4 +59,4 @@ class Post extends AbstractController
 //Create the object
 $controller = new Post();
 $controller->getResponse();
-header('Location: /view');
+header('Location: /ToDoList');

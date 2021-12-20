@@ -3,8 +3,8 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
-include_once "../Model/Collection/ItemList.php";
-include_once "../View/Block/ItemRenderer.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Collection/ItemList.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/View/Block/ItemRenderer.php";
 include_once "AbstractController.php";
 
 /**
