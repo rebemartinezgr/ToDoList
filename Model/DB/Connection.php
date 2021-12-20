@@ -4,9 +4,9 @@ class Connection {
 
     private $mysqli = null;
 
-    const HOST = 'db';
-    const USERNAME = 'user';
-    const PASSWORD = 'password';
+    const HOST = '127.0.0.1';
+    const USERNAME = 'root';
+    const PASSWORD = '';
     const DATABASE = 'database';
 
 
@@ -21,12 +21,11 @@ class Connection {
      */
     public function connect(): mysqli
     {
-        if ($this->mysqli == null) {
-            $this->mysqli = new mysqli(self::HOST, self::USERNAME, self::PASSWORD, self::DATABASE);
-            if ($this->mysqli->connect_error) {
-                throw new \Exception("No es posible establecer conexión con la base de datos");
-            }
+        $this->mysqli = new mysqli(self::HOST, self::USERNAME, self::PASSWORD, self::DATABASE);
+        if ($this->mysqli->connect_error) {
+            throw new \Exception("No es posible establecer conexión con la base de datos");
         }
         return $this->mysqli;
     }
+
 }

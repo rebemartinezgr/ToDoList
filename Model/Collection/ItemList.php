@@ -3,8 +3,9 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
-include_once "../Model/Item.php";
-include_once "../Model/DB/Connection.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Item.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/DB/Connection.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/DB/Transaction.php";
 
 /**
  * Item List Collection Class
@@ -19,6 +20,7 @@ class ItemList
      * @var Connection
      */
     private $connection;
+    private $transaction;
 
     /**
      * @param array $items
@@ -28,6 +30,7 @@ class ItemList
     ) {
         $this->items = $items;
         $this->connection = new Connection();
+        $this->transaction = new Transaction();
     }
 
     /**
@@ -37,7 +40,8 @@ class ItemList
      */
     public function getItems(): array
     {
-        $this->connection->connect();
+        $this->transaction->createTable();
+        $this->transaction->selectAll();
         if ($this->items === null) {
             //TODO load from database
         }

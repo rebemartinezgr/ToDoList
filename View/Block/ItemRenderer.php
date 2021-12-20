@@ -3,7 +3,7 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
-include_once "../Model/Item.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Item.php";
 
 /**
  * Renderer
