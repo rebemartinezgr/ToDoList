@@ -3,8 +3,8 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
-include_once "../Model/Item.php";
-include_once "../Model/DB/Connection.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Item.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/DB/Connection.php";
 
 /**
  * Item List Collection Class

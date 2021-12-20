@@ -4,9 +4,9 @@ class Connection {
 
     private $mysqli = null;
 
-    const HOST = 'db';
-    const USERNAME = 'user';
-    const PASSWORD = 'password';
+    const HOST = '127.0.0.1';
+    const USERNAME = 'root';
+    const PASSWORD = '';
     const DATABASE = 'database';
 
 
