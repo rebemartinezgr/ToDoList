@@ -26,33 +26,15 @@ class Post extends AbstractController
         $block = new ItemRenderer();
         $status = $_REQUEST['status'] ?? 0;
         $value = $_REQUEST['value'] ?? null;
-        $category = $_REQUEST['category'] ?? null;
+        $category = (int) $_REQUEST['category'] ?? null;
         $date = $_REQUEST['date'] ?? null;
         $list = new ItemList();
-        $item = $this->add($value, $status, $list);
-        $result[$item->getId()] = $block->renderItem($item);
-        print_r($result);
-        var_dump($result);
-
-        return $result;
-    }
-
-    /**
-     * Add Item action
-     *
-     * @param $value
-     * @param $status
-     * @param $list
-     * @return Item
-     * @throws Exception
-     */
-    private function add($value, $status, $list): Item
-    {
-        if ($value === null) {
-            throw new \Exception("No es posible crear el item");
+        $item = new Item(null, $value, $status,  $category, $date);
+        $item = $list->addItem($item);
+        if ($item->getId()) {
+            $result[$item->getId()] = $block->renderItem($item);
         }
-
-        return $list->addItem($value, $status);
+        return $result;
     }
 }
 

@@ -1,7 +1,8 @@
 <!--
   ~ @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
   -->
-  <?php include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Controller/Get.php"; ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Controller/Get.php"; ?>
+<?php $controller = new Get(); ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,46 +33,62 @@
         </div>
 
     </div>
+    <!-- Form -->
     <form action="Controller/Post.php" method="post">
-    <div class="row">
-        <div class="col-sm-2">
-        </div>
-        <!-- Form -->
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
             <div class="col-sm-7">
-                <div class="form-group">
-                    <input class="form-control input-lg" id="new-item" name="value" type="text"/>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="new-item" name="value" placeholder="New Task">
+                            <label for="new-item">New Task</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <button type="submit" class="form-control add-button btn btn-primary"><i
+                                        class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="date">Fecha vencimiento</label>
-                    <input class="form-control input-lg" id="date" name="date" type="date"/>
-                </div>
-                <div class="form-group">
-                    <label for="category">Categoría</label>
-                    <input class="form-control input-lg" id="category" name="category" type="text"/>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="date" name="date" placeholder="Date">
+                            <label for="date">Date</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="category" name="category">
+                                <option selected>Choose a category</option>
+                                <?php foreach ($controller->getCategoryOptions() as $option) {
+                                    echo "<option value='{$option['value']}'>{$option['label']}</option>";
+                                }
+                                ?>
+                            </select>
+                            <label for="category">Category</label>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-1">
-                <div class="form-group">
-                    <button type="submit" class="form-control add-button btn btn-primary"><i
-                                class="fa fa-plus"></i>
-                    </button>
-                </div>
+            <div class="col-sm-3">
             </div>
-       <!-- End Form -->
-        <div class="col-sm-2">
         </div>
-    </div>
     </form>
+    <!-- End Form -->
     <div class="row">
         <div class="col-sm-2">
         </div>
         <div class="col-sm-7">
             <ul id="list" class="mylist list-group">
-                <?php 
-                    $controller = new Get();
-                    foreach ($controller->execute() as $k => $item):
-                        echo "<li class='list-group-item' id='{$k}'> {$item}</li>";
-                    endforeach;
+                <?php
+                foreach ($controller->execute() as $k => $item):
+                    echo "<li class='list-group-item' id='{$k}'> {$item}</li>";
+                endforeach;
                 ?>
             </ul>
         </div>

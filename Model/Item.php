@@ -3,6 +3,8 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/Source/Category.php";
+
 /**
  * Item Model Class
  */
@@ -24,18 +26,33 @@ class Item
     private $status;
 
     /**
+     * @var int
+     */
+    private $category;
+    /**
+     * @var string
+     */
+    private $date;
+
+    /**
      * @param int|null $id
      * @param string $value
      * @param bool $status
+     * @param string $category
+     * @param string $date
      */
     public function __construct(
         int    $id = null,
         string $value = '',
-        bool   $status = false
+        bool   $status = false,
+        string $category = '',
+        string $date = ''
     ) {
         $this->id = $id;
         $this->value = $value;
         $this->status = $status;
+        $this->category = $category;
+        $this->date = $date;
     }
 
     /**
@@ -43,7 +60,7 @@ class Item
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->id ?? 0;
     }
 
     /**
@@ -84,5 +101,47 @@ class Item
     public function setStatus(bool $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategory(): int
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param int $category
+     */
+    public function setCategory(int $category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryLabel(): string
+    {
+        $categorySource = new Category();
+
+        return $categorySource->getOptionLabel($this->category);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate(): string
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string $date
+     */
+    public function setDate(string $date): void
+    {
+        $this->date = $date;
     }
 }

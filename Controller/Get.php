@@ -5,9 +5,10 @@
  * Controller for get request
  */
 
-include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Collection/ItemList.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Item.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/View/Block/ItemRenderer.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/Collection/ItemList.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/Item.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/View/Block/ItemRenderer.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/Source/Category.php";
 include_once "AbstractController.php";
 
 /**
@@ -26,24 +27,24 @@ class Get extends AbstractController
     public function execute(): array
     {
         $result = [];
-        $list = new ItemList($this->getDummyData());
+        $list = new ItemList();
         $block = new ItemRenderer();
         $items = $list->getItems();
-        foreach ($items as $k => $item) {
-            $result[$k] = $block->renderItem($item);
+        foreach ($items as $item) {
+            $result[$item->getId()] = $block->renderItem($item);
         }
         return $result;
     }
 
     /**
+     * Return category options in array with the structure
+     * ['label' =>  , 'value' => ]
+     *
      * @return array
      */
-    private function getDummyData(): array
+    public function getCategoryOptions(): array
     {
-        /* This is an example as there is no database connected at this moment */
-        return [
-            1 => new Item(1, "   esto es una prueba de tarea pendiente",false),
-            2 => new Item(2, "      esto es una prueba de tarea realizada",true)
-        ];
+        $categoryModel = new Category();
+        return $categoryModel->getOptions();
     }
 }

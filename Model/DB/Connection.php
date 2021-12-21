@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Connection class.
+ * Establish and close connection
+ */
 class Connection {
 
     private $mysqli = null;
@@ -9,13 +13,17 @@ class Connection {
     const PASSWORD = '';
     const DATABASE = 'database';
 
-
-    public function close() :void
+    /**
+     * Close connection
+     */
+    public function disconnect(): void
     {
         $this->mysqli->close();
     }
 
     /**
+     * Open connection
+     *
      * @return mysqli
      * @throws Exception
      */
@@ -27,5 +35,4 @@ class Connection {
         }
         return $this->mysqli;
     }
-
 }

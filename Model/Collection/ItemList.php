@@ -3,10 +3,9 @@
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
-include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Item.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/DB/Connection.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/DB/Transaction.php";
-
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/Item.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/DB/Connection.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/DB/Transaction.php";
 
 /**
  * Item List Collection Class
@@ -16,21 +15,20 @@ class ItemList
     /**
      * @var array
      */
-    private $items = [];
+    private $items;
+
     /**
-     * @var Connection
+     * @var Transaction
      */
-    private $connection;
     private $transaction;
 
     /**
-     * @param array $items
+     * @param array|null $items
      */
     public function __construct(
-        array $items = []
+        array $items = null
     ) {
         $this->items = $items;
-        $this->connection = new Connection();
         $this->transaction = new Transaction();
     }
 
@@ -41,10 +39,22 @@ class ItemList
      */
     public function getItems(): array
     {
-        $this->transaction->createTable();
-        $this->transaction->selectAll();
+        $items = [];
         if ($this->items === null) {
-            //TODO load from database
+            try {
+                $arrayItems = $this->transaction->selectAll();
+                foreach ($arrayItems as $arrayItem) {
+                    $items[] = new Item(
+                        $arrayItem['id'],
+                        $arrayItem['text'],
+                        $arrayItem['status'],
+                        $arrayItem['category'],
+                        $arrayItem['date']);
+                }
+            } catch (Exception $e) {
+                $items = [];
+            }
+            $this->setItems($items);
         }
         return $this->items;
     }
@@ -62,15 +72,14 @@ class ItemList
     /**
      * Add Item to the list
      *
-     * @param $value
-     * @param $status
+     * @param Item $item
      * @return Item
      */
-    public function addItem($value, $status): Item
+    public function addItem(Item $item): Item
     {
-        $n = rand();
+        $this->transaction->insert($item->getValue(), $item->getCategory(),$item->getDate());
         //TODO save on database and return assigned id
-        return new Item($n, $value, (bool)$status);
+        return $item;
     }
 
     /**
