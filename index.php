@@ -1,6 +1,10 @@
 <!--
-  ~ @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
+@author Rebeca Martinez Garcia
+@author Evelyn Bayas Meza
+@author Daniel Hernández Arcos
+@author Teodoro Tovar de la Hija
   -->
+
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Controller/Get.php"; ?>
 <?php $controller = new Get(); ?>
 <!doctype html>

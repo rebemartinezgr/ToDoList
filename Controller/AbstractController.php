@@ -1,6 +1,9 @@
 <?php
 /*
- * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
+ * @author Rebeca Martinez Garcia
+ * @author Evelyn Bayas Meza
+ * @author Daniel Hernández Arcos
+ * @author Teodoro Tovar de la Hija
  */
 
 include_once "ActionInterface.php";

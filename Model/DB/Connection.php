@@ -1,4 +1,10 @@
 <?php
+/*
+ * @author Rebeca Martinez Garcia
+ * @author Evelyn Bayas Meza
+ * @author Daniel Hernández Arcos
+ * @author Teodoro Tovar de la Hija
+ */
 
 /**
  * Connection class.

@@ -1,3 +1,10 @@
+/*
+ * @author Rebeca Martinez Garcia
+ * @author Evelyn Bayas Meza
+ * @author Daniel Hernández Arcos
+ * @author Teodoro Tovar de la Hija
+ */
+
 window.onload = function() {
     initValidationForm();
 };
