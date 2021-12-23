@@ -33,6 +33,23 @@ class ItemList
     }
 
     /**
+     * @param int $id
+     * @return Item
+     * @throws Exception
+     */
+    public function getItem(int $id) : Item
+    {
+        $arrayItem = $this->transaction->select($id);
+        return new Item(
+            $arrayItem['id'],
+            $arrayItem['text'],
+            $arrayItem['status'],
+            $arrayItem['category'],
+            $arrayItem['date']
+        );
+    }
+
+    /**
      * Get Items list
      *
      * @return array
@@ -70,39 +87,35 @@ class ItemList
     }
 
     /**
-     * Add Item to the list
-     *
      * @param Item $item
      * @return Item
+     * @throws Exception
      */
     public function addItem(Item $item): Item
     {
         $this->transaction->insert($item->getValue(), $item->getCategory(),$item->getDate());
-        //TODO save on database and return assigned id
         return $item;
     }
 
     /**
-     * Update item on the list
-     *
      * @param $id
-     * @param $value
      * @param $status
      * @return Item
+     * @throws Exception
      */
-    public function updateItem($id, $value, $status): Item
+    public function updateItem($id, $status): Item
     {
-        //TODO update on database
-        return new Item($id, $value, (bool)$status);
+        $this->transaction->update($id, $status);
+
+        return $this->getItem($id);
     }
 
     /**
-     * Delete item from the list
-     *
      * @param $id
+     * @throws Exception
      */
     public function deleteItem($id): void
     {
-        //TODO delete on database
+        $this->transaction->delete($id);
     }
 }

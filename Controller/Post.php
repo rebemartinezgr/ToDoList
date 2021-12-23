@@ -4,7 +4,6 @@
  */
 
 include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Collection/ItemList.php";
-include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/View/Block/ItemRenderer.php";
 include_once "AbstractController.php";
 
 /**
@@ -22,17 +21,31 @@ class Post extends AbstractController
      */
     public function execute(): array
     {
-        $result = [];
-        $block = new ItemRenderer();
-        $status = $_REQUEST['status'] ?? 0;
-        $value = $_REQUEST['value'] ?? null;
-        $category = (int) $_REQUEST['category'] ?? null;
-        $date = $_REQUEST['date'] ?? null;
-        $list = new ItemList();
-        $item = new Item(null, $value, $status,  $category, $date);
-        $item = $list->addItem($item);
-        if ($item->getId()) {
-            $result[$item->getId()] = $block->renderItem($item);
+        try {
+            $result = [];
+            $status = $_REQUEST['status'] ?? 0;
+            $value = $_REQUEST['value'] ?? null;
+            $category = $_REQUEST['category'] ?? null;
+            $date = $_REQUEST['date'] ?? null;
+
+            if (empty($value) || empty($category) || empty($date)) {
+                throw new \Exception("No es posible añadir la tarea");
+            }
+
+            $list = new ItemList();
+            $item = new Item(null, $value, $status,  $category, $date);
+
+            if (!$item->validateDate()) {
+                throw new \Exception("No es posible añadir la tarea. Fecha no válida");
+            }
+            if (!$item->validateCategory()) {
+                throw new \Exception("No es posible añadir la tarea. Categoría no válida");
+            }
+
+            $list->addItem($item);
+        } catch (\Exception $e) {
+            $result['status']  = false;
+            $result['msg']  = "No es posible añadir la tarea: " . $e->getMessage();
         }
         return $result;
     }

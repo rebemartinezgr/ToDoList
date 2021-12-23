@@ -34,7 +34,7 @@
 
     </div>
     <!-- Form -->
-    <form action="Controller/Post.php" method="post">
+    <form id="task-form" action="Controller/Post.php" method="post">
         <div class="row">
             <div class="col-sm-2">
             </div>
@@ -42,8 +42,8 @@
                 <div class="row">
                     <div class="col-sm-10">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="new-item" name="value" placeholder="New Task">
-                            <label for="new-item">New Task</label>
+                            <input type="text" class="form-control" id="task-text" name="value" placeholder="New Task">
+                            <label for="task-text">New Task</label>
                         </div>
                     </div>
                     <div class="col-sm-2">
@@ -64,7 +64,7 @@
                     <div class="col-sm-7">
                         <div class="form-floating mb-3">
                             <select class="form-select" id="category" name="category">
-                                <option selected>Choose a category</option>
+                                <option selected value=''>Choose a category</option>
                                 <?php foreach ($controller->getCategoryOptions() as $option) {
                                     echo "<option value='{$option['value']}'>{$option['label']}</option>";
                                 }

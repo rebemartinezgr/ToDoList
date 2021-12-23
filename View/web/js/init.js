@@ -1,3 +1,39 @@
+window.onload = function() {
+    initValidationForm();
+};
+
+function initValidationForm()
+{
+    let form = document.getElementById("task-form");
+    form.onsubmit = function() {
+
+        // get elements to validate
+        let taskText = document.getElementById("task-text");
+        let date = document.getElementById("date");
+        let category = document.getElementById("category");
+
+        //reset invalid class
+        taskText.classList.remove("is-invalid");
+        date.classList.remove("is-invalid");
+        category.classList.remove("is-invalid");
+
+        // make validation
+        let valid = true;
+        if (taskText && taskText.value === "") {
+            taskText.classList.add("is-invalid");
+            valid = false;
+        }
+        if (date && date.value === "") {
+            date.classList.add("is-invalid");
+            valid = false;
+        }
+        if (category && category.value === "") {
+            category.classList.add("is-invalid");
+            valid = false;
+        }
+        return valid;
+    }
+}
 
 function editItem(data)
 {
@@ -5,11 +41,16 @@ function editItem(data)
     const xhttp = new XMLHttpRequest();
     // Define a callback function to reload the list
     xhttp.onload = function() {
+        let response;
         if (xhttp.status === 200) {
-            try{
+            try {
                 response = JSON.parse(xhttp.response);
-                processUpdate(data.get('id'), response);
-            } catch(err) {
+                if (response.status === false) {
+                    alert(response.msg);
+                } else {
+                    processUpdate(data.get('id'), response);
+                }
+            } catch (err) {
                 alert("La acción no ha podido ser completada. Por favor, inténtalo de nuevo");
                 throw new Error("Did not receive JSON, instead received: " + xhttp.response)
             }
@@ -23,30 +64,6 @@ function editItem(data)
     xhttp.send(data);
 }
 
-function addItem(data)
-{
-    // Create an XMLHttpRequest object
-    const xhttp = new XMLHttpRequest();
-    // Define a callback function to reload the list
-    xhttp.onload = function() {
-        if (xhttp.status === 200) {
-            try{
-                response = JSON.parse(xhttp.response);
-                processNew(response);
-            } catch(err) {
-                alert("La acción no ha podido ser completada. Por favor, inténtalo de nuevo");
-                throw new Error("Did not receive JSON, instead received: " + xhttp.response)
-            }
-        } else {
-            alert("La acción no ha podido ser completada. Por favor, inténtalo de nuevo");
-            throw new Error("Did not receive JSON, instead received: " + xhttp.response)
-        }
-    }
-    // Send a request
-    xhttp.open("POST", "Controller/Post.php");
-    xhttp.send(data);
-}
-
 function deleteItem(data)
 {
     // Create an XMLHttpRequest object
@@ -56,7 +73,11 @@ function deleteItem(data)
         if (xhttp.status === 200) {
             try{
                 response = JSON.parse(xhttp.response);
-                processDeleted(data.get('id'))
+                if (response.status === false) {
+                    alert(response.msg);
+                } else {
+                    processDeleted(data.get('id'))
+                }
             } catch(err) {
                 alert("La acción no ha podido ser completada. Por favor, inténtalo de nuevo");
                 throw new Error("Did not receive JSON, instead received: " + xhttp.response)
@@ -85,11 +106,6 @@ function processItems(items) {
     }
 }
 
-function processNew(items)
-{
-    processItems(items);
-}
-
 function processDeleted(id)
 {
     let itemElement = document.getElementById(id);
@@ -98,10 +114,6 @@ function processDeleted(id)
 
 function getListElement() {
     return document.getElementById("list");
-}
-
-function getNewItemInput() {
-    return document.getElementById("new-item");
 }
 
 function createHtmlItem(key, itemHtml) {
@@ -120,7 +132,6 @@ function handleStatusClick(checkbox)
     let status = checkbox.checked ? '1' : '0';
     data.append('id', checkbox.dataset.id);
     data.append('status', status);
-    data.append('value',  itemValue.innerText);
     editItem(data);
 }
 

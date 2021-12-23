@@ -26,10 +26,13 @@ class Put extends AbstractController
         $block = new ItemRenderer();
         $id = $_REQUEST['id'] ?? null;
         $status = $_REQUEST['status'] ?? null;
-        $value = $_REQUEST['value'] ?? null;
-        $list = new ItemList();
-        $item = $this->edit($id, $value, $status, $list);
-        $result[$item->getId()] = $block->renderItem($item);
+        try {
+            $item = $this->edit($id, $status);
+            $result[$item->getId()] = $block->renderItem($item);
+        } catch (\Exception $e) {
+            $result['status']  = false;
+            $result['msg']  = "No es posible actualizar el estado de la tarea: " . $e->getMessage();
+        }
 
         return $result;
     }
@@ -39,17 +42,16 @@ class Put extends AbstractController
      *
      * @param $id
      * @param $status
-     * @param $value
-     * @param $list
      * @return Item
      * @throws Exception
      */
-    private function edit($id, $value, $status, $list): Item
+    private function edit($id, $status): Item
     {
-        if ($id === null || $status === null) {
-            throw new \Exception("No es posible actualizar el estado del item");
+        if ($id === null || !($id > 0) || $status === null || !in_array($status, [0,1])) {
+            throw new \Exception("Datos inválidos");
         }
-        return $list->updateItem($id, $value, $status);
+        $list = new ItemList();
+        return $list->updateItem($id, (int)$status);
     }
 }
 

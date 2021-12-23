@@ -24,10 +24,15 @@ class Delete extends AbstractController
         $result = [];
         $id = $_REQUEST['id'] ?? null;
         $list = new ItemList();
-        if ($id === null) {
-            throw new \Exception("No es posible eliminar el item");
+        try {
+            if ($id === null || !($id > 0)) {
+                throw new \Exception("Datos inválidos");
+            }
+            $list->deleteItem($id);
+        } catch (\Exception $e) {
+            $result['status']  = false;
+            $result['msg']  = "No es posible borrar la tarea: " . $e->getMessage();
         }
-        $list->deleteItem($id);
         return $result;
     }
 }

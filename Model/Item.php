@@ -144,4 +144,21 @@ class Item
     {
         $this->date = $date;
     }
+
+    public function validateDate(): bool
+    {
+        $year = date("Y", strtotime($this->getDate()));
+        $month = date("m", strtotime($this->getDate()));
+        $day = date("d", strtotime($this->getDate()));
+
+        return checkdate($month, $day, $year);
+    }
+
+    /**
+     * @return bool
+     */
+    public function validateCategory(): bool
+    {
+        return $this->getCategoryLabel() ?? false;
+    }
 }

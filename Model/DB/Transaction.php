@@ -20,16 +20,6 @@ class Transaction
      */
     const TABLE = 'items';
 
-    /*public function createDatebase() :void
-    {
-        $query = "CREATE DATABASE 'database'";
-        if(mysqli_query($link, $query)){
-            echo "Success";
-        } else {
-            echo "Failure";
-        }
-    }*/
-
     /**
      * @throws Exception
      */
@@ -55,9 +45,29 @@ class Transaction
         );";
 
         if (!$newConn->query($query)) {
-            throw new \Exception("No es posible crear la tabla en base de datos");
+            throw new \Exception("Error al crear la tabla en base de datos");
         }
         $this->conn->disconnect();
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws Exception
+     */
+    public function select($id): array
+    {
+        $result = [];
+        $newConn = $this->conn->connect();
+        $query = "SELECT * FROM " . self::TABLE;
+        $query .= " WHERE `id` = " . $id . ";";
+        $mysqlResult = $newConn->query($query);
+        if ($mysqlResult) {
+            throw new \Exception("Error al leer el elemento en base de datos");
+        }
+        $result = $mysqlResult->fetch_assoc();
+        $this->conn->disconnect();
+        return $result;
     }
 
     /**
@@ -71,10 +81,11 @@ class Transaction
         $query = "SELECT * FROM " . self::TABLE;
         $query .= " ORDER BY status ASC, date ASC";
         $mysqlResult = $newConn->query($query);
-        if ($mysqlResult) {
-            while ($row = $mysqlResult->fetch_assoc()) {
-                $result[] = $row;
-            }
+        if (!$mysqlResult) {
+            throw new \Exception("Error al leer elementos en base de datos");
+        }
+        while ($row = $mysqlResult->fetch_assoc()) {
+            $result[] = $row;
         }
         $this->conn->disconnect();
         return $result;
@@ -84,20 +95,56 @@ class Transaction
      * @param $text
      * @param $category
      * @param $date
-     * @return array
+     * @return bool
      * @throws Exception
      */
-    public function insert($text, $category, $date): array
+    public function insert($text, $category, $date): bool
     {
-        $result = [];
         $newConn = $this->conn->connect();
         $query = "INSERT INTO " . self::TABLE . "(`text`, `category`, `date`)";
         $query .= " VALUES ('" . $text . "'," . $category . ",'" . $date . "');";
         $mysqlResult = $newConn->query($query);
         if (!$mysqlResult) {
-
+            throw new \Exception("Error al añadir el elemento en base de datos");
         }
         $this->conn->disconnect();
-        return $result;
+        return (bool) $mysqlResult;
+    }
+
+    /**
+     * @param $id
+     * @param $status
+     * @return bool
+     * @throws Exception
+     */
+    public function update($id, $status): bool
+    {
+        $newConn = $this->conn->connect();
+        $query = "UPDATE " . self::TABLE . " SET `status` = " . $status;
+        $query .= " WHERE `id` = " . $id . ";";
+        $mysqlResult = $newConn->query($query);
+        if (!$mysqlResult) {
+            throw new \Exception("Error al actualizar elemento en base de datos");
+        }
+        $this->conn->disconnect();
+        return (bool) $mysqlResult;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws Exception
+     */
+    public function delete($id): bool
+    {
+        $newConn = $this->conn->connect();
+        $query = "DELETE FROM " . self::TABLE;
+        $query .= " WHERE `id` = " . $id . ";";
+        $mysqlResult = $newConn->query($query);
+        if (!$mysqlResult) {
+            throw new \Exception("Error al borrar el elemento en base de datos");
+        }
+        $this->conn->disconnect();
+        return (bool) $mysqlResult;
     }
 }
