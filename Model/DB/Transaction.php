@@ -92,7 +92,7 @@ class Transaction
         $result = [];
         $newConn = $this->conn->connect();
         $query = "INSERT INTO " . self::TABLE . "(`text`, `category`, `date`)";
-        $query .= " VALUES ('" . $text . "'," . $category . "," . $date . "');";
+        $query .= " VALUES ('" . $text . "'," . $category . ",'" . $date . "');";
         $mysqlResult = $newConn->query($query);
         if (!$mysqlResult) {
 
