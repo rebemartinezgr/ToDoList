@@ -9,44 +9,59 @@ window.onload = function() {
     initValidationForm();
 };
 
+/**
+ * Initialize validation form on submit
+ */
 function initValidationForm()
 {
     let form = document.getElementById("task-form");
     form.onsubmit = function() {
-
-        // get elements to validate
-        let taskText = document.getElementById("task-text");
-        let date = document.getElementById("date");
-        let category = document.getElementById("category");
-
-        //reset invalid class
-        taskText.classList.remove("is-invalid");
-        date.classList.remove("is-invalid");
-        category.classList.remove("is-invalid");
-
-        // make validation
-        let valid = true;
-        if (taskText && taskText.value === "") {
-            taskText.classList.add("is-invalid");
-            valid = false;
-        }
-        if (date && date.value === "") {
-            date.classList.add("is-invalid");
-            valid = false;
-        }
-        if (category && category.value === "") {
-            category.classList.add("is-invalid");
-            valid = false;
-        }
-        return valid;
+        return validate();
     }
 }
 
+/**
+ * Validate form
+ * @returns {boolean}
+ */
+function validate()
+{
+    // get elements to validate
+    let taskText = document.getElementById("task-text");
+    let date = document.getElementById("date");
+    let category = document.getElementById("category");
+
+    //reset invalid class
+    taskText.classList.remove("is-invalid");
+    date.classList.remove("is-invalid");
+    category.classList.remove("is-invalid");
+
+    // make validation
+    let valid = true;
+    if (taskText && taskText.value === "") {
+        taskText.classList.add("is-invalid");
+        valid = false;
+    }
+    if (date && date.value === "") {
+        date.classList.add("is-invalid");
+        valid = false;
+    }
+    if (category && category.value === "") {
+        category.classList.add("is-invalid");
+        valid = false;
+    }
+    return valid;
+}
+
+/**
+ * Edit item calling Put controller as async ajax call
+ * @param data
+ */
 function editItem(data)
 {
     // Create an XMLHttpRequest object
     const xhttp = new XMLHttpRequest();
-    // Define a callback function to reload the list
+    // Define a callback function
     xhttp.onload = function() {
         let response;
         if (xhttp.status === 200) {
@@ -71,21 +86,27 @@ function editItem(data)
     xhttp.send(data);
 }
 
+/**
+ * Delete item calling Delete controller as async ajax call
+ * @param data
+ */
 function deleteItem(data)
 {
     // Create an XMLHttpRequest object
     const xhttp = new XMLHttpRequest();
-    // Define a callback function to reload the list
+
+    // Define a callback function
     xhttp.onload = function() {
+        let response;
         if (xhttp.status === 200) {
-            try{
+            try {
                 response = JSON.parse(xhttp.response);
                 if (response.status === false) {
                     alert(response.msg);
                 } else {
                     processDeleted(data.get('id'))
                 }
-            } catch(err) {
+            } catch (err) {
                 alert("La acción no ha podido ser completada. Por favor, inténtalo de nuevo");
                 throw new Error("Did not receive JSON, instead received: " + xhttp.response)
             }
@@ -99,6 +120,9 @@ function deleteItem(data)
     xhttp.send(data);
 }
 
+/**
+ Process update items replacing its content
+ */
 function processUpdate(id, items)
 {
     for (const key of Object.keys(items)) {
@@ -107,31 +131,18 @@ function processUpdate(id, items)
     }
 }
 
-function processItems(items) {
-    for (const key of Object.keys(items)) {
-        createHtmlItem(key, items[key]);
-    }
-}
-
+/**
+ Process delete item removing the element
+ */
 function processDeleted(id)
 {
     let itemElement = document.getElementById(id);
     itemElement.remove();
 }
 
-function getListElement() {
-    return document.getElementById("list");
-}
-
-function createHtmlItem(key, itemHtml) {
-    list = getListElement();
-    let newItem = document.createElement('li');
-    newItem.id = key
-    newItem.innerHTML = itemHtml;
-    newItem.classList.add("list-group-item");
-    list.appendChild(newItem);
-}
-
+/**
+ Handle click on status checkbox
+ */
 function handleStatusClick(checkbox)
 {
     var data = new FormData();
@@ -142,6 +153,9 @@ function handleStatusClick(checkbox)
     editItem(data);
 }
 
+/**
+ Handle click on remove button
+ */
 function handleRemoveItem(removeButton)
 {
     var data = new FormData();
