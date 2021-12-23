@@ -28,11 +28,15 @@ class Get extends AbstractController
     public function execute(): array
     {
         $result = [];
-        $list = new ItemList();
-        $block = new ItemRenderer();
-        $items = $list->getItems();
-        foreach ($items as $item) {
-            $result[$item->getId()] = $block->renderItem($item);
+        try {
+            $list = new ItemList();
+            $block = new ItemRenderer();
+            $items = $list->getItems();
+            foreach ($items as $item) {
+                $result[$item->getId()] = $block->renderItem($item);
+            }
+        } catch (\Exception $e) {
+
         }
         return $result;
     }
