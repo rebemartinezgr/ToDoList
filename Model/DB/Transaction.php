@@ -57,12 +57,11 @@ class Transaction
      */
     public function select($id): array
     {
-        $result = [];
         $newConn = $this->conn->connect();
         $query = "SELECT * FROM " . self::TABLE;
         $query .= " WHERE `id` = " . $id . ";";
         $mysqlResult = $newConn->query($query);
-        if ($mysqlResult) {
+        if (!$mysqlResult) {
             throw new \Exception("Error al leer el elemento en base de datos");
         }
         $result = $mysqlResult->fetch_assoc();
