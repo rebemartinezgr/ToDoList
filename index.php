@@ -1,10 +1,12 @@
+<?php
+session_start();
+?>
 <!--
 @author Rebeca Martinez Garcia
 @author Evelyn Bayas Meza
 @author Daniel Hernández Arcos
 @author Teodoro Tovar de la Hija
   -->
-
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Controller/Get.php"; ?>
 <?php $controller = new Get(); ?>
 <!doctype html>
@@ -21,6 +23,15 @@
     <script src="./View/web/js/init.js"></script>
 </head>
 <body>
+<script type="application/javascript">
+    <?php $lastMsg = $controller->getErrorMsg();
+        if ($lastMsg) {
+            echo "alert('{$lastMsg}');";
+            $controller->resetMsg();
+        }
+    ?>
+</script>
+
 <div class="container">
     <h1 class="title">My To Do List</h1>
     <div class="row">

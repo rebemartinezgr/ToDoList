@@ -52,4 +52,20 @@ class Get extends AbstractController
         $categoryModel = new Category();
         return $categoryModel->getOptions();
     }
+
+
+    /**
+     * @return mixed|string
+     */
+    public function getErrorMsg()
+    {
+        return $_SESSION["error-msg"] ?? '';
+    }
+
+    public function resetMsg()
+    {
+        if (isset($_SESSION["error-msg"])) {
+            unset($_SESSION["error-msg"]);
+        }
+    }
 }
