@@ -1,8 +1,9 @@
 <?php
 /*
- * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
- *
- * Controller for get request
+ * @author Rebeca Martinez Garcia
+ * @author Evelyn Bayas Meza
+ * @author Daniel Hernández Arcos
+ * @author Teodoro Tovar de la Hija
  */
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/Collection/ItemList.php";
@@ -27,11 +28,15 @@ class Get extends AbstractController
     public function execute(): array
     {
         $result = [];
-        $list = new ItemList();
-        $block = new ItemRenderer();
-        $items = $list->getItems();
-        foreach ($items as $item) {
-            $result[$item->getId()] = $block->renderItem($item);
+        try {
+            $list = new ItemList();
+            $block = new ItemRenderer();
+            $items = $list->getItems();
+            foreach ($items as $item) {
+                $result[$item->getId()] = $block->renderItem($item);
+            }
+        } catch (\Exception $e) {
+
         }
         return $result;
     }
@@ -46,5 +51,21 @@ class Get extends AbstractController
     {
         $categoryModel = new Category();
         return $categoryModel->getOptions();
+    }
+
+
+    /**
+     * @return mixed|string
+     */
+    public function getErrorMsg()
+    {
+        return $_SESSION["error-msg"] ?? '';
+    }
+
+    public function resetMsg()
+    {
+        if (isset($_SESSION["error-msg"])) {
+            unset($_SESSION["error-msg"]);
+        }
     }
 }

@@ -1,7 +1,11 @@
 <?php
 /*
- * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
+ * @author Rebeca Martinez Garcia
+ * @author Evelyn Bayas Meza
+ * @author Daniel Hernández Arcos
+ * @author Teodoro Tovar de la Hija
  */
+
 include_once "Connection.php";
 
 /**
@@ -26,7 +30,21 @@ class Transaction
     public function __construct()
     {
         $this->conn = new Connection();
+        $this->createDatabase();
         $this->createTable();
+    }
+
+    /**
+     * Create database
+     *
+     * @throws Exception
+     */
+    public function createDatabase()
+    {
+        $conn = $this->conn->connect(false);
+        $sql = "CREATE DATABASE IF NOT EXISTS `" . Connection::DATABASE . "`";
+        $conn->query($sql);
+        $conn->close();
     }
 
     /**

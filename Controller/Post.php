@@ -1,5 +1,12 @@
 <?php
 /*
+ * @author Rebeca Martinez Garcia
+ * @author Evelyn Bayas Meza
+ * @author Daniel Hernández Arcos
+ * @author Teodoro Tovar de la Hija
+ */
+
+/*
  * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
  */
 
@@ -29,23 +36,24 @@ class Post extends AbstractController
             $date = $_REQUEST['date'] ?? null;
 
             if (empty($value) || empty($category) || empty($date)) {
-                throw new \Exception("No es posible añadir la tarea");
+                throw new \Exception("Valores requeridos: texto, categoría y fecha");
             }
 
             $list = new ItemList();
             $item = new Item(null, $value, $status,  $category, $date);
 
             if (!$item->validateDate()) {
-                throw new \Exception("No es posible añadir la tarea. Fecha no válida");
+                throw new \Exception("Fecha no válida");
             }
             if (!$item->validateCategory()) {
-                throw new \Exception("No es posible añadir la tarea. Categoría no válida");
+                throw new \Exception("Categoría no válida");
             }
 
             $list->addItem($item);
         } catch (\Exception $e) {
+            session_start();
             $result['status']  = false;
-            $result['msg']  = "No es posible añadir la tarea: " . $e->getMessage();
+            $_SESSION["error-msg"] = "No es posible añadir la tarea: " . $e->getMessage();
         }
         return $result;
     }
