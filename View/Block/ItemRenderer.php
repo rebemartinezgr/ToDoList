@@ -9,7 +9,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . "/ToDoList/Model/Item.php";
 
 /**
- * Renderer
+ * Item Renderer class
  */
 class ItemRenderer
 {

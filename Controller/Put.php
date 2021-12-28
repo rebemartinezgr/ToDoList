@@ -18,7 +18,7 @@ class Put extends AbstractController
     const HTTP_METHOD = 'POST';
 
     /**
-     * Process post request
+     * Process put request
      *
      * @return false|string
      * @throws Exception
@@ -58,6 +58,5 @@ class Put extends AbstractController
     }
 }
 
-//Create the object
 $controller = new Put();
 echo $controller->getResponse();

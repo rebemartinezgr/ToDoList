@@ -9,7 +9,7 @@
 include_once "ActionInterface.php";
 
 /**
- * Get controller class
+ * Abstract controller class
  */
 abstract class AbstractController implements ActionInterface
 {

@@ -30,6 +30,7 @@ class Connection {
     /**
      * Open connection
      *
+     * @param bool $useDataBase
      * @return mysqli
      * @throws Exception
      */

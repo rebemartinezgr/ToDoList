@@ -11,5 +11,8 @@
  */
 interface ActionInterface
 {
+    /**
+     * @return array
+     */
     public function execute(): array;
 }

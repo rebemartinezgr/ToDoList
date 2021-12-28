@@ -6,10 +6,6 @@
  * @author Teodoro Tovar de la Hija
  */
 
-/*
- * @author Rebeca Martinez Garcia <r.martinezgr@gmail.com>
- */
-
 include_once $_SERVER['DOCUMENT_ROOT']."/ToDoList/Model/Collection/ItemList.php";
 include_once "AbstractController.php";
 
@@ -59,7 +55,7 @@ class Post extends AbstractController
     }
 }
 
-//Create the object
 $controller = new Post();
 $controller->getResponse();
+// Redirect to index
 header('Location: /ToDoList');

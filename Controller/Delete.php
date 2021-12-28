@@ -40,6 +40,5 @@ class Delete extends AbstractController
     }
 }
 
-//Create the object
 $controller = new Delete();
 echo $controller->getResponse();

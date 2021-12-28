@@ -55,6 +55,8 @@ class Get extends AbstractController
 
 
     /**
+     * Get error msg from session
+     *
      * @return mixed|string
      */
     public function getErrorMsg()
@@ -62,7 +64,10 @@ class Get extends AbstractController
         return $_SESSION["error-msg"] ?? '';
     }
 
-    public function resetMsg()
+    /**
+     * Restore error msg on session
+     */
+    public function resetMsg(): void
     {
         if (isset($_SESSION["error-msg"])) {
             unset($_SESSION["error-msg"]);
